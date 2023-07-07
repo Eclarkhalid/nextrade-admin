@@ -9,6 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import axios from 'axios';
+import { useState } from 'react';
 
 
 const formSchema = z.object({
@@ -17,16 +19,28 @@ const formSchema = z.object({
 
 export const StoreModal = () => {
     const storeModal = useStoreModal();
+    const [loading, setLoading] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: '',
+            name: "",
         },
     });
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+        try {
+            setLoading(true);
+
+            const response = await axios.post('/api/stores', values);
+            console.log(response.data)
+
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            setLoading(false);
+        }
     }
 
     return <>
@@ -39,16 +53,21 @@ export const StoreModal = () => {
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input placeholder='Ecommerce' {...field} />
+                                        <Input 
+                                        disabled={loading}
+                                        placeholder='Ecommerce' {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )} />
                             <div className="pt-6 space-x-2 flex items-center justify-end">
                                 <Button variant={'outline'}
+                                disabled={loading}
                                     onClick={storeModal.onClose}
                                 >Cancel</Button>
-                                <Button type='submit'>Continue</Button>
+                                <Button 
+                                disabled={loading}
+                                type='submit'>Continue</Button>
                             </div>
                         </form>
                     </Form>
