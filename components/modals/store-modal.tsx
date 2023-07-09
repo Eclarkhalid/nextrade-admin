@@ -13,6 +13,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 
+
 const formSchema = z.object({
     name: z.string().min(3),
 });
@@ -36,7 +37,7 @@ export const StoreModal = () => {
             console.log(response.data)
 
         } catch (error) {
-            console.log(error);
+            toast.error("Something went wrong");
 
         } finally {
             setLoading(false);
