@@ -18,11 +18,7 @@ import { useStoreModal } from "@/hooks/use-store-modal";
 
     }
   }, [isOpen, onOpen])
-  return <>
-  <section className="homepage p-4">
-  RootPage
-  </section>
-  </>
+  return null;
 }
 
 export default HomePage;

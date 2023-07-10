@@ -11,6 +11,7 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import axios from 'axios';
 import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 
 
@@ -34,7 +35,7 @@ export const StoreModal = () => {
             setLoading(true);
 
             const response = await axios.post('/api/stores', values);
-            console.log(response.data)
+            window.location.assign(`/$response.data.id`);
 
         } catch (error) {
             toast.error("Something went wrong");
