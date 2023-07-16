@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import prismadb from '@/lib/prismadb';
-import { ClerkProvider, auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs';
 
 import Navbar from '@/components/navbar';
 
@@ -33,10 +33,8 @@ export default async function DashboardLayout({
 
     return (
         <>
-        <ClerkProvider>
         <Navbar />
             {children}
-        </ClerkProvider>
         </>
     );
 };
